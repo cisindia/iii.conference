@@ -33,6 +33,7 @@ setup(name='iii.conference',
           'collective.dexteritytextindexer',
           'plone.app.multilingual',
           'plone.multilingualbehavior',
+          'plone.formwidget.captcha',
           # -*- Extra requirements: -*-
       ],
       extras_require={
