@@ -34,6 +34,7 @@ setup(name='iii.conference',
           'plone.app.multilingual',
           'plone.multilingualbehavior',
           'plone.formwidget.captcha',
+          'plone.formwidget.recaptcha'
           # -*- Extra requirements: -*-
       ],
       extras_require={
