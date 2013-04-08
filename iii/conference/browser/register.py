@@ -71,7 +71,7 @@ class RegistrationForm(form.SchemaAddForm):
         obj.setTitle('%s %s' % (obj.last_name, obj.first_name))
         obj.reindexObject()
         IStatusMessage(self.request).addStatusMessage(
-            'Thank you. You are now registered.'
+            'Thank you. Your application has been received.'
         )
         return obj
 
