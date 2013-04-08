@@ -58,7 +58,7 @@ class IParticipant(form.Schema, IImageScaleTraversable):
         required=True
     )
 
-    date_of_birth = schema.Datetime(
+    date_of_birth = schema.Date(
         title=_(u'Date of Birth'),
         required=True
     )
