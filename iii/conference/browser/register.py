@@ -63,8 +63,12 @@ class RegistrationForm(form.SchemaAddForm):
         transaction.savepoint(optimistic=True)
         oid = INameChooser(self.context).chooseName(u'Participant', obj)
 
-        self.context.manage_renameObject(tempid, oid)
+        obj.unindexObject()
+        obj._setId(oid)
+        self.context._delObject(tempid, suppress_events=True)
+        self.context._setObject(oid, obj, set_owner=0, suppress_events=True)
 
+        obj.setTitle('%s %s' % (obj.last_name, obj.first_name))
         obj.reindexObject()
         IStatusMessage(self.request).addStatusMessage(
             'Thank you. You are now registered.'
@@ -72,4 +76,5 @@ class RegistrationForm(form.SchemaAddForm):
         return obj
 
     def add(self, obj):
-        pass
+        site = getSite()
+        self.request.response.redirect(site.absolute_url())
