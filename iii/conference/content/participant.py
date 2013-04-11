@@ -37,6 +37,11 @@ class IParticipant(form.Schema, IImageScaleTraversable):
         required=True
     )
 
+    address = schema.Text(
+            title=_(u'Address'),
+            required = True,
+            )
+
     email = schema.TextLine(
         title=_(u'Email'),
         required=True
@@ -72,7 +77,6 @@ class IParticipant(form.Schema, IImageScaleTraversable):
 
     discipline = schema.TextLine(
         title=_(u'Discipline'),
-        description=_(u'Please write briefly about your domain of work'),
         required=True
     )
 
