@@ -1,9 +1,6 @@
 from five import grok
 from iii.conference.content.participant import IParticipant
 from iii.conference.content.conference import IConference
-from plone.formwidget.captcha import CaptchaFieldWidget
-from plone.formwidget.recaptcha import ReCaptchaFieldWidget
-from plone.formwidget.captcha.validator import CaptchaValidator
 from plone.dexterity.utils import createContentInContainer
 from plone.directives import form
 from zope.component.hooks import getSite
@@ -15,17 +12,22 @@ from zope.component import getMultiAdapter
 
 from Products.CMFPlone.utils import _createObjectByType
 from Products.CMFCore.utils import getToolByName
+from z3c.form import validator
 
 from Products.statusmessages.interfaces import IStatusMessage
 from zope.container.interfaces import INameChooser
 import time, transaction
+from collective.z3cform.norobots.widget import NorobotsFieldWidget
+from collective.z3cform.norobots.validator import NorobotsValidator, WrongNorobotsAnswer
+
 
 class IRegistrationForm(IParticipant):
 
-    form.widget(captcha=ReCaptchaFieldWidget)
-    captcha = schema.TextLine(title=u"",
-                            required=False)
-
+    form.widget(captcha=NorobotsFieldWidget)
+    captcha = schema.TextLine(
+        title=u"",
+        required=True
+    )
 
 @form.validator(field=IRegistrationForm['captcha'])
 def validateCaptcha(value):
@@ -34,12 +36,12 @@ def validateCaptcha(value):
     if request.getURL().endswith('kss_z3cform_inline_validation'):
         return
 
-    captcha = getMultiAdapter((site, request), name='recaptcha')
+    norobots = getMultiAdapter((site, request), name='norobots')
 
-    if not captcha.verify():
-        raise ValidationError(
-        'The code you entered was wrong, please enter the new one.')
+    if not norobots.verify(value):
+        raise WrongNorobotsAnswer
 
+    return 
 
 class RegistrationForm(form.SchemaAddForm):
     grok.name('register')
