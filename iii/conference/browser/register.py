@@ -48,8 +48,16 @@ class RegistrationForm(form.SchemaAddForm):
     grok.context(IConference)
     grok.require("zope.Public")
     schema = IRegistrationForm
-    label = u"Register for this event"
 
+    @property
+    def description(self):
+        result = u'''
+        <span style="font-size:20px">
+        Please read <a href="%s/details">event details</a>
+        before filling out the following Registration Form
+        </span>
+        ''' % getSite().absolute_url()
+        return result
 
     def create(self, data):
         title = 'participant'
