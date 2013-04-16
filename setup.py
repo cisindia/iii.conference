@@ -33,9 +33,10 @@ setup(name='iii.conference',
           'collective.dexteritytextindexer',
           'plone.app.multilingual',
           'plone.multilingualbehavior',
+          'collective.z3cform.norobots',
           'plone.formwidget.captcha',
           'plone.formwidget.recaptcha',
-          'collective.z3cform.norobots',
+          'collective.miscbehaviors',
           # -*- Extra requirements: -*-
       ],
       extras_require={
